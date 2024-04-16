@@ -29,7 +29,9 @@ public class ArticleService {
     }
 
 
-    private Article fallback(String articleId) {
+    private Article fallback(String articleId, Exception ex) {
+
+        log.info("fallback execute.. articleId = {}, exception = {}", articleId, ex.getMessage());
 
         return new Article(
                 articleId,
