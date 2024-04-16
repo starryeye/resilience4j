@@ -1,1 +1,17 @@
-spring.application.name=retry
+
+resilience4j:
+  retry:
+    configs:
+      default: # "default" ?? ??? ????.
+        max-attempts: 3
+        wait-duration: 1000
+        retry-exceptions: # retry-exceptions ? ???? ?? ??? retry ?? ???. (fallback ? ???)
+          - org.springframework.web.client.ResourceAccessException
+    instances: # retry ????(???)
+      myRetryConfig:
+        base-config: default
+
+
+logging:
+  level:
+    root: debug
