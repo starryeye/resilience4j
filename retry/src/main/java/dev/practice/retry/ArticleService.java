@@ -23,8 +23,11 @@ public class ArticleService {
         // articleId 로 article thumbnail image 를 다른 서버에 요청
 
         // rest client 를 사용하여 발생하는 network exception 을 따로 처리하지 않으면,
-        // 아래의 코드처럼 자연스럽게 던져지는 꼴이 될 것이다.
-        // 비즈니스 에러 (400, 500) 는 retry 할 필요가 대부분 없을 것이다.
+        //      아래의 코드처럼 자연스럽게 던져지는 꼴이 될 것이다. 이 경우 retry 를 하도록 하자
+        // restTemplate 의 경우 http status 값(4xx, 5xx)에 따른 exception 이 발생한다.
+        //      http status 값에 따른 exception 은 retry 를 해봤자 의미가 없는 경우가 대부분 이므로
+        //      config 에서 ignore-exceptions 처리를 해두던가, 설정을 해두지 않으면, retry 를 수행하지 않고 fallback 이 바로 수행된다.
+        //      혹은, getArticle 범위 aop 로 exception 이 던져지기전에 예외를 잡으면 retry, fallback 을 수행하지 않게도 할 수 있다.
         throw new ResourceAccessException("image server network error occur.. articleId = " + articleId);
     }
 
