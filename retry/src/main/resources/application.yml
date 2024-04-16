@@ -2,11 +2,11 @@
 resilience4j:
   retry:
     configs:
-      default: # "default" ?? ??? ????.
+      default: # "default" 라는 설정을 만들었다.
         max-attempts: 3
         wait-duration: 1000
-        retry-exceptions: # retry-exceptions ? ???? ?? ??? retry ?? ???. (fallback ? ???)
+        retry-exceptions: # retry-exceptions 에 지정되지 않은 예외는 retry 하지 않는다. (fallback 은 진행함)
           - org.springframework.web.client.ResourceAccessException
-    instances: # retry ????(???)
+    instances: # retry 인스턴스(실체화)
       myRetryConfig:
-        base-config: default
+        base-config: default # "default" 라는 설정을 사용하는 인스턴스 myRetryConfig 를 만듬
