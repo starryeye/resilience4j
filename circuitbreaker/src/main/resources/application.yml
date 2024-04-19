@@ -6,19 +6,23 @@ resilience4j:
       default:
         sliding-window-type: COUNT_BASED
 
-        sliding-window-size: 10 # Close ????, ?? ??? ??? ???? ?? ???? ????. (?? 10? ? 3? ???? 30%)
-        minimum-number-of-calls: 10 # Close ????, sliding window ? ?? ??? open ??? ?? ???????. sliding window ??? ?? ?? try ?? ??? ???. (9 ? ?? ???? 10 ?? try ? close ??? ????.)
+        sliding-window-size: 10 # Close 상태에서, 해당 사이즈 만큼을 표본으로 하여 실패율을 계산한다. (최근 10회 중 3회 실패하면 30%)
+        minimum-number-of-calls: 10 # Close 상태에서, sliding window 를 모두 채우고 open 상태로 갈지 계산하도록한다. sliding window 사이즈 만큼 최소 try 수를 설정한 것이다. (9 회 모두 실패해도 10 번째 try 를 close 상태로 진행한다.)
 
-        permitted-number-of-calls-in-half-open-state: 5 # Half-open ????, ?? ??? ??? ???? ?? ???? ????. (Half-open ????? sliding window size)
+        permitted-number-of-calls-in-half-open-state: 5 # Half-open 상태에서, 해당 사이즈 만큼을 표본으로 하여 실패율을 계산한다. (Half-open 상태에서의 sliding window size)
 
-        failure-rate-threshold: 40 # Close ???? Open, Half-open ???? Open ?? ???? ??? ???
+        failure-rate-threshold: 40 # Close 상태에서 Open, Half-open 상태에서 Open 으로 전환되는 실패율 임계값
 
-        slow-call-duration-threshold: 3000 # ???? ??? ???? timeout ???
-        slow-call-rate-threshold: 60 # Close ???? Open, Half-open ???? Open ?? ???? ???? ??? ???
+        slow-call-duration-threshold: 3000 # 타임아웃 실패로 처리하는 timeout 임계값
+        slow-call-rate-threshold: 60 # Close 상태에서 Open, Half-open 상태에서 Open 으로 전환되는 타임아웃 실패율 임계값
 
-        automatic-transition-from-open-to-half-open-enabled: true # Open ????, Half-open ??? ?? ????? ??? ???? ????? ??.
-        wait-duration-in-open-state: 10000 # Open ????, Half-open ??? ???? ??? ????(ms)
+        automatic-transition-from-open-to-half-open-enabled: true # Open 상태에서, Half-open 상태로 일정 대기시간이 지나면 자동으로 전환되도록 한다.
+        wait-duration-in-open-state: 10000 # Open 상태에서, Half-open 상태로 전환하기 까지의 대기시간(ms)
 
+        record-exceptions: # 해당 예외가 발생하면 실패로 간주한다. 여기에 예외를 지정하는 순간 다른 모든 예외(ignore exception 제외)는 성공으로 간주한다.
+          - org.springframework.web.client.ResourceAccessException
+        ignore-exceptions: # 해당 예외가 발생하면 실패로 간주하지 않지만, fallback 은 수행한다. (실패율 계산에 넣지 않는다는 뜻)
+          - java.lang.ArithmeticException
     instances:
       myCircuitBreakerConfig:
         base-config: default
