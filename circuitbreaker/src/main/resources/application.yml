@@ -1,1 +1,23 @@
-spring.application.name=circuitbreaker
+
+# https://resilience4j.readme.io/docs/circuitbreaker#create-and-configure-a-circuitbreaker
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-type: COUNT_BASED
+        minimum-number-of-calls: 7
+        sliding-window-size: 10
+        wait-duration-in-open-state: 10s
+
+        failure-rate-threshold: 40
+
+        slow-call-duration-threshold: 3000
+        slow-call-rate-threshold: 60
+
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+
+        event-consumer-buffer-size: 10
+    instances:
+      myCircuitBreakerConfig:
+        base-config: default
