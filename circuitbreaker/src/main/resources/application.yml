@@ -16,7 +16,7 @@ resilience4j:
         slow-call-duration-threshold: 3000 # 타임아웃 실패로 처리하는 timeout 임계값
         slow-call-rate-threshold: 60 # Close 상태에서 Open, Half-open 상태에서 Open 으로 전환되는 타임아웃 실패율 임계값
 
-        automatic-transition-from-open-to-half-open-enabled: true # Open 상태에서, Half-open 상태로 일정 대기시간이 지나면 자동으로 전환되도록 한다.
+        automatic-transition-from-open-to-half-open-enabled: true # Open 상태에서, Half-open 상태로 일정 대기시간이 지나면(모니터링 트리거) 자동으로 전환되도록 한다. false 이면, 일정 대기시간이 지나면 자동으로 전환되는게 아니라 새로운 요청이 오면(트리거) 그때 시간이 지났다면 half-open 으로 전환 하도록한다.
         wait-duration-in-open-state: 10000 # Open 상태에서, Half-open 상태로 전환하기 까지의 대기시간(ms)
 
         record-exceptions: # 해당 예외가 발생하면 실패로 간주한다. 여기에 예외를 지정하는 순간 다른 모든 예외(ignore exception 제외)는 성공으로 간주한다.
