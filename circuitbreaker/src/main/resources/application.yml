@@ -4,7 +4,7 @@ resilience4j:
   circuitbreaker:
     configs:
       default:
-        sliding-window-type: COUNT_BASED
+        sliding-window-type: COUNT_BASED # 횟수 기반 sliding-window, TIME_BASED : 시간 기반 sliding-window
 
         sliding-window-size: 10 # Close 상태에서, 해당 사이즈 만큼을 표본으로 하여 실패율을 계산한다. (최근 10회 중 3회 실패하면 30%)
         minimum-number-of-calls: 10 # Close 상태에서, sliding window 를 모두 채우고 open 상태로 갈지 계산하도록한다. sliding window 사이즈 만큼 최소 try 수를 설정한 것이다. (9 회 모두 실패해도 10 번째 try 를 close 상태로 진행한다.)
@@ -13,7 +13,7 @@ resilience4j:
 
         failure-rate-threshold: 40 # Close 상태에서 Open, Half-open 상태에서 Open 으로 전환되는 실패율 임계값
 
-        slow-call-duration-threshold: 3000 # 타임아웃 실패로 처리하는 timeout 임계값
+        slow-call-duration-threshold: 3000 # 타임아웃 실패로 처리하는 timeout 임계값 (해당 값을 지난다 해서 요청을 중단하지는 않음, 중단하는 것은 rest client 설정을 따름)
         slow-call-rate-threshold: 60 # Close 상태에서 Open, Half-open 상태에서 Open 으로 전환되는 타임아웃 실패율 임계값
 
         automatic-transition-from-open-to-half-open-enabled: true # Open 상태에서, Half-open 상태로 일정 대기시간이 지나면(모니터링 트리거) 자동으로 전환되도록 한다. false 이면, 일정 대기시간이 지나면 자동으로 전환되는게 아니라 새로운 요청이 오면(트리거) 그때 시간이 지났다면 half-open 으로 전환 하도록한다.
