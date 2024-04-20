@@ -1,1 +1,11 @@
+### throw record exception
 GET http://localhost:8080/articles/1
+
+### throw ignore exception
+GET http://localhost:8080/articles/2
+
+### slow call
+GET http://localhost:8080/articles/3
+
+### normal call
+GET http://localhost:8080/articles/4
