@@ -9,3 +9,14 @@ GET http://localhost:8080/articles/3
 
 ### normal call
 GET http://localhost:8080/articles/4
+
+
+### actuator 가 제공하는 API 를 통해 특정 서킷브레이커의 상태를 강제로 변경한다. ("http://localhost:8080/actuator/circuitbreakers/{name}")
+### 이를 통해 scale out 된 application 들 중 한 서버의 특정 서킷브레이커가 Close 에서 open 으로 바뀌면 다른 application 에 있는 특정 서킷브레이커의 상태를 강제로 변경해줌으로 써 장애를 빠르게 대처할 수 있다.
+### CLOSE, DISABLE, FORCE_OPEN 은 되는데 OPEN, HALF_OPEN 은 안댐..
+POST http://localhost:8080/actuator/circuitbreakers/myCircuitBreakerConfig
+Content-Type: application/json
+
+{
+  "updateState": "CLOSE"
+}

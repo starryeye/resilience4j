@@ -30,6 +30,10 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
+//	https://docs.spring.io/spring-cloud-circuitbreaker/reference/spring-cloud-circuitbreaker-resilience4j/collecting-metrics.html
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.github.resilience4j:resilience4j-micrometer'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
